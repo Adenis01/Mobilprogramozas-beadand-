@@ -1,0 +1,152 @@
+[
+  {
+    "id": "elsobbseg_001",
+    "tema": "Elsőbbségadás",
+    "kerdes": "Kinek kell elsőbbséget adni körforgalomban?",
+    "valasz": "A körforgalomban haladó járműveknek kell elsőbbséget adni, ha a bejáratnál nincs erre vonatkozó jelzőtábla."
+  },
+  {
+    "id": "elsobbseg_002",
+    "tema": "Elsőbbségadás",
+    "kerdes": "Mit jelent az \"Elsőbbségadás kötelező!\" tábla?",
+    "valasz": "A táblánál meg kell állni, ha szükséges, és elsőbbséget kell adni a keresztező úton haladó járműveknek."
+  },
+  {
+    "id": "elsobbseg_003",
+    "tema": "Elsőbbségadás",
+    "kerdes": "Jobbkéz szabály: ki megy először az egyenlő rangú kereszteződésnél?",
+    "valasz": "Jobbról érkező jármű megy először. Ha jobbról senki sem érkezik, akkor te haladhatsz."
+  },
+  {
+    "id": "elsobbseg_004",
+    "tema": "Elsőbbségadás",
+    "kerdes": "Mikor van elsőbbsége a gyalogosnak?",
+    "valasz": "Zebránál (kijelölt gyalogos-átkelőhelyen) mindig a gyalogosnak van elsőbbsége, a jármű köteles megállni."
+  },
+  {
+    "id": "elsobbseg_005",
+    "tema": "Elsőbbségadás",
+    "kerdes": "A főúton haladónak van-e elsőbbsége a mellékúttal szemben?",
+    "valasz": "Igen, a főúton haladó jármű mindig elsőbbséget élvez a mellékútról becsatlakozóval szemben."
+  },
+  {
+    "id": "tablak_001",
+    "tema": "Közlekedési táblák",
+    "kerdes": "Mit jelent a piros háromszög alakú tábla fehér alapon?",
+    "valasz": "Figyelmeztető táblát jelöl. Veszélyre, különleges körülményre hívja fel a figyelmet (pl. kanyar, szűkület, akadály)."
+  },
+  {
+    "id": "tablak_002",
+    "tema": "Közlekedési táblák",
+    "kerdes": "Mit jelent a kék kör alakú tábla fehér nyíllal?",
+    "valasz": "Kötelező haladási irányt jelöl — csak abba az irányba szabad menni, amerre a nyíl mutat."
+  },
+  {
+    "id": "tablak_003",
+    "tema": "Közlekedési táblák",
+    "kerdes": "Mit jelent a piros karika kék alapon fehér vízszintes csíkkal?",
+    "valasz": "Behajtani tilos! Mindkét irányból tilos a behajtás."
+  },
+  {
+    "id": "tablak_004",
+    "tema": "Közlekedési táblák",
+    "kerdes": "Mit jelent a kék négyzet alakú tábla fehér P betűvel?",
+    "valasz": "Parkolóhelyet jelöl, ahol szabad parkolni."
+  },
+  {
+    "id": "tablak_005",
+    "tema": "Közlekedési táblák",
+    "kerdes": "Mit jelent a sárga rombusz alakú tábla?",
+    "valasz": "Főútvonalat jelöl — te vagy a főúton, elsőbbséged van a mellékutakkal szemben."
+  },
+  {
+    "id": "tablak_006",
+    "tema": "Közlekedési táblák",
+    "kerdes": "Mit jelent a piros nyolcszög alakú tábla?",
+    "valasz": "STOP tábla — kötelező megállni, és csak akkor szabad továbbimenni, ha az út szabad."
+  },
+  {
+    "id": "sebesseg_001",
+    "tema": "Sebességkorlátozás",
+    "kerdes": "Mi a megengedett legnagyobb sebesség lakott területen belül?",
+    "valasz": "50 km/h, hacsak jelzőtábla mást nem jelez."
+  },
+  {
+    "id": "sebesseg_002",
+    "tema": "Sebességkorlátozás",
+    "kerdes": "Mi a megengedett legnagyobb sebesség autópályán személyautóval?",
+    "valasz": "130 km/h."
+  },
+  {
+    "id": "sebesseg_003",
+    "tema": "Sebességkorlátozás",
+    "kerdes": "Mi a megengedett legnagyobb sebesség lakott területen kívül (főúton)?",
+    "valasz": "90 km/h."
+  },
+  {
+    "id": "sebesseg_004",
+    "tema": "Sebességkorlátozás",
+    "kerdes": "Mi a megengedett legnagyobb sebesség autóúton személyautóval?",
+    "valasz": "110 km/h."
+  },
+  {
+    "id": "sebesseg_005",
+    "tema": "Sebességkorlátozás",
+    "kerdes": "Mikor kell lassítani esős időben?",
+    "valasz": "Mindig a körülményeknek megfelelő sebességet kell tartani. Nedves úton a féktávolság megnő, ezért lassítani kell."
+  },
+  {
+    "id": "bunteto_001",
+    "tema": "Büntetőpontok",
+    "kerdes": "Hány büntetőpontot kap, aki meghaladja a megengedett sebességet 30 km/h-val?",
+    "valasz": "3 büntetőpontot kap a vezető, és pénzbírságot is kirónak."
+  },
+  {
+    "id": "bunteto_002",
+    "tema": "Büntetőpontok",
+    "kerdes": "Hány büntetőpont jár piros lámpán áthajtásért?",
+    "valasz": "6 büntetőpont jár piros jelzésen való áthajtásért."
+  },
+  {
+    "id": "bunteto_003",
+    "tema": "Büntetőpontok",
+    "kerdes": "Hány büntetőpontnál vonják be a jogosítványt?",
+    "valasz": "18 büntetőpontnál vonják be a jogosítványt."
+  },
+  {
+    "id": "bunteto_004",
+    "tema": "Büntetőpontok",
+    "kerdes": "Hány büntetőpont jár ittas vezetésért?",
+    "valasz": "12 büntetőpont jár ittas vezetésért, ezen felül pénzbírság és akár elvonó kezelés is előírható."
+  },
+  {
+    "id": "bunteto_005",
+    "tema": "Büntetőpontok",
+    "kerdes": "Hány büntetőpont jár mobiltelefon használatáért vezetés közben?",
+    "valasz": "3 büntetőpont jár, ha kézben tartott telefonnal vezet valaki."
+  },
+  {
+    "id": "elsobbseg_006",
+    "tema": "Elsőbbségadás",
+    "kerdes": "Mikor kell elsőbbséget adni a villamosnak?",
+    "valasz": "Mindig, kivéve, ha te főúton haladsz és a villamos nem forgalomirányítón keresztül keresztez."
+  },
+  {
+    "id": "tablak_007",
+    "tema": "Közlekedési táblák",
+    "kerdes": "Mit jelent a kék háttérű tábla zöld nyíllal jobbra?",
+    "valasz": "Kötelező jobbra kanyarodni — csak jobbra szabad fordulni ennél a táblánál."
+  },
+  {
+    "id": "sebesseg_006",
+    "tema": "Sebességkorlátozás",
+    "kerdes": "Vontatmánnyal (utánfutóval) mi a megengedett sebesség autópályán?",
+    "valasz": "80 km/h a megengedett legnagyobb sebesség utánfutóval autópályán."
+  },
+  {
+    "id": "bunteto_006",
+    "tema": "Büntetőpontok",
+    "kerdes": "Mennyi idő után törlődnek a büntetőpontok?",
+    "valasz": "A büntetőpontok 2 év után törlődnek, ha ez idő alatt újabb pontot nem kapott a vezető."
+  }
+]
