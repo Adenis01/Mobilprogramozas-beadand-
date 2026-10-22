@@ -6,8 +6,13 @@ import '../widgets/flip_card.dart';
 /// Gyakorló képernyő — kártyák megforgatásával
 class PracticeScreen extends StatefulWidget {
   final String? tema; // null = összes témakör
+  final bool csakKepes; // ha true, csak a képes kérdéseket gyakoroljuk
 
-  const PracticeScreen({super.key, required this.tema});
+  const PracticeScreen({
+    super.key,
+    required this.tema,
+    this.csakKepes = false,
+  });
 
   @override
   State<PracticeScreen> createState() => _PracticeScreenState();
@@ -28,7 +33,10 @@ class _PracticeScreenState extends State<PracticeScreen> {
 
   Future<void> _kartyakBetoltese() async {
     List<Flashcard> kartyak;
-    if (widget.tema != null) {
+    if (widget.csakKepes) {
+      kartyak = await _dbService.getKepesKartyak();
+      kartyak.shuffle();
+    } else if (widget.tema != null) {
       kartyak = await _dbService.getEsedekes(tema: widget.tema);
       // Ha minden esedékes kártya el lett végezve, mutassuk az összeset
       if (kartyak.isEmpty) {
@@ -126,7 +134,9 @@ class _PracticeScreenState extends State<PracticeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.tema ?? 'Összes témakör'),
+        title: Text(widget.csakKepes
+            ? '🖼️ Képes kérdések'
+            : (widget.tema ?? 'Összes témakör')),
         centerTitle: true,
       ),
       body: _betoltes

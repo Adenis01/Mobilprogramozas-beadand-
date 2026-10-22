@@ -21,11 +21,15 @@ class DatabaseService {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'jogsi_flashcards.db');
 
-    return await openDatabase(
+    final database = await openDatabase(
       path,
-      version: 1,
+      version: 3,
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
+    // Automatikusan szinkronizáljuk a JSON kérdéseket és képeket az adatbázissal
+    await resyncFromAssets(database);
+    return database;
   }
 
   Future<void> _onCreate(Database db, int version) async {
@@ -35,6 +39,7 @@ class DatabaseService {
         tema TEXT NOT NULL,
         kerdes TEXT NOT NULL,
         valasz TEXT NOT NULL,
+        kep_url TEXT,
         tudtam_szam INTEGER DEFAULT 0,
         nem_tudtam_szam INTEGER DEFAULT 0,
         interval_nap REAL DEFAULT 1.0,
@@ -44,6 +49,59 @@ class DatabaseService {
 
     // Betöltjük az alap KRESZ kérdéseket az assets fájlból
     await _seedFromAssets(db);
+  }
+
+  /// Adatbázis migráció — régi DB-khez hozzáadja a kép oszlopot és frissíti a kérdéseket
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      try {
+        await db.execute('ALTER TABLE flashcards ADD COLUMN kep_url TEXT');
+      } catch (_) {}
+    }
+    await resyncFromAssets(db);
+  }
+
+  /// JSON-ból frissíti a kep_url mezőket és hozzáadja az új kérdéseket
+  /// — a meglévő haladást (tudtam_szam, interval stb.) megtartja
+  Future<int> resyncFromAssets([Database? customDb]) async {
+    try {
+      final dbInstance = customDb ?? await db;
+
+      // Biztosítjuk, hogy a kep_url oszlop létezzen régi adatbázisoknál is
+      try {
+        await dbInstance.execute('ALTER TABLE flashcards ADD COLUMN kep_url TEXT');
+      } catch (_) {}
+
+      final String jsonStr =
+          await rootBundle.loadString('assets/data/kerdesek.json');
+      final List<dynamic> jsonList = json.decode(jsonStr) as List<dynamic>;
+
+      int frissitve = 0;
+      for (final item in jsonList) {
+        final card = Flashcard.fromJson(item as Map<String, dynamic>);
+        // Frissítjük a kártya kép URL-jét, kérdését, válaszát, témáját
+        final updated = await dbInstance.rawUpdate(
+          '''
+          UPDATE flashcards
+          SET kep_url = ?, kerdes = ?, valasz = ?, tema = ?
+          WHERE id = ?
+          ''',
+          [card.kepUrl, card.kerdes, card.valasz, card.tema, card.id],
+        );
+        // Ha nem létezett még ez a kártya, beszúrjuk
+        if (updated == 0) {
+          await dbInstance.insert(
+            'flashcards',
+            card.toDb(),
+            conflictAlgorithm: ConflictAlgorithm.replace,
+          );
+        }
+        frissitve++;
+      }
+      return frissitve;
+    } catch (e) {
+      return 0;
+    }
   }
 
   /// Alap kérdések betöltése a kerdesek.json fájlból
@@ -147,4 +205,32 @@ class DatabaseService {
       'sikerarany': osszes > 0 ? tudott / osszes : 0.0,
     };
   }
+
+  /// Csak a képpel rendelkező kártyák lekérése
+  Future<List<Flashcard>> getKepesKartyak() async {
+    final database = await db;
+    final rows = await database.query(
+      'flashcards',
+      where: 'kep_url IS NOT NULL AND kep_url != ""',
+      orderBy: 'tema ASC',
+    );
+    return rows.map(Flashcard.fromDb).toList();
+  }
+
+  /// Képes kártyák száma
+  Future<int> getKepesKartyakSzama() async {
+    final database = await db;
+    final res = await database.rawQuery(
+      'SELECT COUNT(*) as cnt FROM flashcards WHERE kep_url IS NOT NULL AND kep_url != ""',
+    );
+    return Sqflite.firstIntValue(res) ?? 0;
+  }
+
+  /// Teljes adatbázis újratelepítése (törlés és újratöltés a legfrissebb JSON-ból)
+  Future<void> resetDatabase() async {
+    final database = await db;
+    await database.delete('flashcards');
+    await _seedFromAssets(database);
+  }
 }
+

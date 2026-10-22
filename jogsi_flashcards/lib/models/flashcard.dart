@@ -4,6 +4,7 @@ class Flashcard {
   final String tema;
   final String kerdes;
   final String valasz;
+  final String? kepUrl; // opcionális kép URL (pl. KRESZ tábla képe)
 
   // Spaced repetition mezők (a "okos ismétlés" logikájához)
   int tudtamSzam;     // hányszor nyomtuk a "Tudom" gombot
@@ -16,6 +17,7 @@ class Flashcard {
     required this.tema,
     required this.kerdes,
     required this.valasz,
+    this.kepUrl,
     this.tudtamSzam = 0,
     this.nemTudtamSzam = 0,
     this.interval = 1.0,
@@ -62,6 +64,7 @@ class Flashcard {
       tema: json['tema'] as String,
       kerdes: json['kerdes'] as String,
       valasz: json['valasz'] as String,
+      kepUrl: json['kep_url'] as String?,
     );
   }
 
@@ -72,6 +75,7 @@ class Flashcard {
       tema: row['tema'] as String,
       kerdes: row['kerdes'] as String,
       valasz: row['valasz'] as String,
+      kepUrl: row['kep_url'] as String?,
       tudtamSzam: row['tudtam_szam'] as int? ?? 0,
       nemTudtamSzam: row['nem_tudtam_szam'] as int? ?? 0,
       interval: (row['interval_nap'] as num?)?.toDouble() ?? 1.0,
@@ -88,6 +92,7 @@ class Flashcard {
       'tema': tema,
       'kerdes': kerdes,
       'valasz': valasz,
+      'kep_url': kepUrl,
       'tudtam_szam': tudtamSzam,
       'nem_tudtam_szam': nemTudtamSzam,
       'interval_nap': interval,
