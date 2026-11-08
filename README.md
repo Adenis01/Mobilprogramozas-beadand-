@@ -6,17 +6,19 @@ Mobilalkalmazás beadandó – Udvardy Balázs
 
 ## Az alkalmazás célja és funkciói
 
-Egy KRESZ-tanulást segítő flashcard (villogtatós kártyás) alkalmazás, amely **spaced repetition** (okos ismétléses) rendszerrel működik. A legtöbb KRESZ-es app csak teszteket kínál vagy véletlenszerűen kavarja a kérdéseket — ez az app azt is figyeli, mit tudsz és mit nem: amit nem tudsz, hamarabb visszadobja, amit jól tudsz, egyre ritkábban mutatja.
+Egy KRESZ-tanulást segítő flashcard (kártyás) alkalmazás, amely **spaced repetition** (okos ismétléses) rendszerrel működik. A legtöbb KRESZ-es app csak teszteket kínál vagy véletlenszerűen kavarja a kérdéseket — ez az app azt is figyeli, mit tudsz és mit nem: amit nem tudsz, hamarabb visszadobja, amit jól tudsz, egyre ritkábban mutatja.
 
 ### Főbb funkciók
 
 | Funkció | Leírás |
 |---|---|
 | **Témakörök** | 4 témakör: Elsőbbségadás, Közlekedési táblák, Sebességkorlátozás, Büntetőpontok |
-| **Kártyaforgatás** | 3D flip animáció — előlapon kérdés, hátlapon válasz |
+| **Képes KRESZ kérdések** | KRESZ-táblákat tartalmazó képes kérdések külön gyakorlási móddal (STOP, elsőbbségadás, körforgalom, lakó-pihenő övezet stb.) |
+| **Kártyaforgatás** | 3D flip animáció — előlapon a kérdés (és KRESZ-tábla képe), hátlapon a válasz |
 | **Okos ismétlés** | Saját implementációjú spaced repetition: tudtam → ritkábban jön, nem tudtam → hamarabb visszajön |
-| **Statisztika** | Témakörönkénti haladás százalékban, progress bar-ral |
-| **Tesztmód** | 20 véletlenszerű kérdés, vizsgaszimulációként — a végén pontszám és értékelés |
+| **Kérdésbank és kereső** | Az összes kártya böngészése, szabadszavas keresés, témakör- és képes szűrés, valamint kártya-előnézet |
+| **Statisztika** | Témakörönkénti haladás százalékban, színkódolt progress bar-ral |
+| **Tesztmód** | 20 véletlenszerű kérdés vizsgaszimulációként — a végén pontszám és értékelés (86%-os küszöbbel) |
 | **Utolsó gyakorlás** | A főmenün látszik, mikor gyakoroltál utoljára |
 
 ---
@@ -24,16 +26,16 @@ Egy KRESZ-tanulást segítő flashcard (villogtatós kártyás) alkalmazás, ame
 ## Technológia
 
 - **Flutter** (Dart) – cross-platform keretrendszer, Androidon tesztelve
-- **SQLite** (`sqflite` csomag) – helyi adatbázis, szerver nem szükséges
+- **SQLite** (`sqflite` csomag) – helyi adatbázis a kártyák és a tanulási haladás tárolásához, automatikus JSON-szinkronizációval
 - **shared_preferences** – utolsó gyakorlás dátumának tárolásához
-- **Material 3** – Flutter beépített modern UI rendszere
+- **Material 3** – Flutter modern UI rendszere automatikus világos/sötét témával (`ThemeMode.system`)
 
 ```
 lib/
-├── models/        # adatmodellek (Flashcard)
-├── services/      # adatbázis logika (DatabaseService)
-├── screens/       # képernyők (főmenü, gyakorlás, statisztika, tesztmód)
-└── widgets/       # újrafelhasználható elemek (FlipCard animáció)
+├── models/        # adatmodellek (Flashcard + spaced repetition logika)
+├── services/      # adatbázis logika és szinkronizáció (DatabaseService)
+├── screens/       # képernyők (főmenü, gyakorlás, kérdésbank, statisztika, tesztmód)
+└── widgets/       # újrafelhasználható elemek (FlipCard 3D animáció)
 ```
 
 ---
@@ -57,24 +59,24 @@ flutter pub get
 flutter run
 ```
 
-> Ha `flutter doctor` valami hiányzó Android SDK eszközt jelez:  
+> Ha a `flutter doctor` valami hiányzó Android SDK eszközt jelez:  
 > Android Studio → SDK Manager → SDK Tools → **Android SDK Command-line Tools** telepítése megoldja.
 
-Az app első indításkor automatikusan betölti a beépített ~50 KRESZ kérdést a `assets/data/kerdesek.json` fájlból — nem indul üresen.
+Az app első indításkor automatikusan betölti és szinkronizálja a beépített 50 KRESZ kérdést az `assets/data/kerdesek.json` fájlból és a KRESZ-tábla képeket az `assets/images/` mappából — nem indul üresen.
 
 ---
 
 ## Ismert hibák / hiányosságok
 
-- A kártyaforgatás animáció néha akadhat nagyon lassú emulátoron; fizikai eszközön nem tapasztalható
+- A kártyaforgatás animáció nagyon lassú emulátoron néha megakadhat; fizikai eszközön folyamatos
 - Az adatbázis törlése esetén az app újrainduláskor visszaállítja az alap kérdéseket, de a korábbi haladás elvész (ez szándékos reset-ként is használható)
-- A beépített kérdések száma (~50 db) a valódi KRESZ vizsgához képest kevés — éles verzióban az összes ~800 kérdést lehetne belevenni
+- A beépített kérdések száma (50 db) a valódi KRESZ vizsgához képest kevesebb — éles verzióban a teljes hivatalos kérdésbankot érdemes belevenni
 
-## Fejlesztési lehetőségek
+## Jövőbeni fejlesztési lehetőségek
 
-- Több kérdés hozzáadása (az összes magyarországi KRESZ kérdés)
+- Több kérdés hozzáadása (az összes magyarországi KRESZ vizsgakérdés és forgalmi szituációs ábra)
 - Emlékeztető push notification: „Ma még nem gyakoroltál"
-- Tábla felismerős mód: csak a tábla képe látszik, szöveg nélkül kell felismerni
+- Feleletválasztós (A/B/C/D) vizsgamód a kártyás önértékelés mellett
 - Felhasználói fiókok és felhőszinkronizáció
 
 ---
