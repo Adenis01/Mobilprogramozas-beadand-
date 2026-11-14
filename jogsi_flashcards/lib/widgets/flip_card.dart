@@ -146,7 +146,7 @@ class _CardFace extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                isElolap ? '❓ Kérdés' : '✅ Válasz',
+                isElolap ? 'Kérdés' : 'Válasz',
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,

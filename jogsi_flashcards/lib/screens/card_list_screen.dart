@@ -217,7 +217,6 @@ class _CardListScreenState extends State<CardListScreen> {
                     children: [
                       // Csak képes kérdések kapcsoló chip
                       FilterChip(
-                        avatar: const Text('🖼️'),
                         label: Text('Csak képes ($kepesDarab)'),
                         selected: _csakKepes,
                         selectedColor: colorScheme.primaryContainer,
@@ -427,7 +426,7 @@ class _CardListScreenState extends State<CardListScreen> {
                                                               10),
                                                     ),
                                                     child: const Text(
-                                                      '🖼️ Képes',
+                                                      'Képes',
                                                       style: TextStyle(
                                                         fontSize: 10,
                                                         fontWeight:

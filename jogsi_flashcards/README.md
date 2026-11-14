@@ -4,70 +4,83 @@ Mobilalkalmazás beadandó – Udvardy Balázs
 
 ---
 
-## Az ötlet
+## Az alkalmazás célja és funkciói
 
-Amikor a jogosítvány elméleti vizsgájára készültem, azt vettem észre, hogy a legtöbb KRESZ-es app vagy csak teszteket kínál (ahol megnyomod a választ és kész), vagy rengeteg kérdést zúdít rád egyszerre, de nem segít abban, hogy melyiken kell még dolgozni. Ezért csináltam egy flashcard alapú appot, ahol a kártyás rendszer azt is figyelembe veszi, hogy mit tudsz és mit nem – amit nem tudsz, azt hamarabb dobja vissza, amit jól tudsz, azt egyre ritkábban mutatja.
+Egy KRESZ-tanulást segítő flashcard (villogtatós kártyás) alkalmazás, amely **spaced repetition** (okos ismétléses) rendszerrel működik. A legtöbb KRESZ-es app csak teszteket kínál vagy véletlenszerűen kavarja a kérdéseket — ez az app azt is figyeli, mit tudsz és mit nem: amit nem tudsz, hamarabb visszadobja, amit jól tudsz, egyre ritkábban mutatja.
 
-## Funkciók
+### Főbb funkciók
 
-**Témakörök:** Az anyag négy témakörre van felosztva – elsőbbségadás, közlekedési táblák, sebességkorlátozás, büntetőpontok. Nem kell egyszerre az egészet átnyomni, hanem lehet célzottan csak egy témakörrel foglalkozni.
-
-**Kártyaforgatás:** A kártyán az elején a kérdés látszik, rákoppintásra megfordul és megjelenik a válasz. Utána eldöntöd, hogy tudtad-e vagy sem.
-
-**Okos ismétlés:** Ha azt mondod, hogy tudtad, a következő alkalommal tovább vár azzal a kártyával. Ha nem tudtad, hamar visszajön. Ez egy egyszerű spaced repetition rendszer, amit én implementáltam, nem külső könyvtár.
-
-**Statisztika:** A főmenüből elérhető egy statisztika oldal, ahol látszik témakörönként, hogy hány kártyát ismersz már és hány százalékon állsz.
-
-**Beépített kérdések:** Az app első indításkor betölt egy JSON fájlból ~25 kérdést, szóval nem indul üresen.
-
-## Technológia
-
-- **Flutter** (Dart) – cross-platform keretrendszer, Androidon teszteltem
-- **SQLite** (sqflite csomag) – helyi adatbázis, szerver nem kell hozzá
-- **Material 3** – a Flutter beépített UI rendszere
-
-A projekt struktúrája:
-```
-lib/
-├── models/        # adatmodellek (Flashcard)
-├── services/      # adatbázis logika
-├── screens/       # képernyők (főmenü, gyakorlás, statisztika)
-└── widgets/       # újrafelhasználható elemek (flip kártya animáció)
-```
-
-## Futtatás
-
-### Szükséges:
-- Flutter SDK (3.x)
-- Android Studio + Android emulátor (vagy fizikai Android eszköz)
-
-### Lépések:
-
-```bash
-# Csomagok letöltése
-flutter pub get
-
-# Futtatás (emulátor indítása után)
-flutter run
-```
-
-Ha az `flutter doctor` valami hiányzó Android SDK eszközt jelez, Android Studióban az SDK Manager → SDK Tools → Command-line Tools telepítésével megoldható.
-
-## Ismert hibák / hiányosságok
-
-- A kártyaforgatás animáció néha fagyhat le lassabb emulátoron, fizikai eszközön nem vettem észre ilyet
-- Ha manuálisan kitörli valaki az adatbázist, az app következő indításnál újratölti a JSON-t, de a haladás elvész (ez amúgy szándékos reset-ként is használható)
-- A beépített kérdések száma elég kevés (25 db), ezt lehetne bővíteni
-
-## Fejlesztési lehetőségek
-
-Amik az ötleteknél is szerepeltek, de időhiány miatt nem kerültek bele:
-
-- **Tesztmód**: 20 véletlenszerű kérdés, a végén pontszám – mint egy mini vizsga
-- **Emlékeztető értesítés**: "Ma még nem gyakoroltál" push notification
-- **Tábla felismerős mód**: csak képet mutat, szöveg nélkül, azt kell felismerni
-- Több kérdés hozzáadása (akár az összes KRESZ kérdés)
+| Funkció | Leírás |
+|---|---|
+| **Témakörök** | 4 témakör: Elsőbbségadás, Közlekedési táblák, Sebességkorlátozás, Büntetőpontok |
+| **Képes kérdések** | 11 db KRESZ-táblás és közlekedési ábrás kérdés külön gyakorlási és szűrési móddal |
+| **Kérdésbank** | Összes kérdés böngészése, keresés és témakör/képes szűrés |
+| **Kártyaforgatás** | 3D flip animáció — előlapon kérdés (és opcionális kép), hátlapon válasz |
+| **Okos ismétlés** | Saját implementációjú spaced repetition: tudtam → ritkábban jön, nem tudtam → hamarabb visszajön |
+| **Statisztika** | Témakörönkénti haladás százalékban, progress bar-ral |
+| **Tesztmód** | 20 véletlenszerű kérdés, vizsgaszimulációként — a végén pontszám és 86%-os vizsgaértékelés |
+| **Utolsó gyakorlás** | A főmenün látszik, mikor gyakoroltál utoljára |
 
 ---
 
-Neptun: I6UY10
+## Technológia
+
+- **Flutter** (Dart) – cross-platform keretrendszer, Androidon tesztelve
+- **SQLite** (`sqflite` csomag) – helyi adatbázis, szerver nem szükséges
+- **shared_preferences** – utolsó gyakorlás dátumának tárolásához
+- **Material 3** – Flutter beépített modern UI rendszere
+
+```
+lib/
+├── main.dart      # alkalmazás belépési pont, Material 3 világos/sötét téma
+├── models/        # adatmodellek (Flashcard)
+├── services/      # adatbázis logika (DatabaseService)
+├── screens/       # képernyők (főmenü, gyakorlás, kérdésbank, statisztika, tesztmód)
+└── widgets/       # újrafelhasználható elemek (FlipCard animáció)
+```
+
+---
+
+## Telepítési / futtatási útmutató
+
+### Szükséges
+
+- Flutter SDK 3.x (`flutter --version` a verzió ellenőrzéséhez)
+- Android Studio + Android emulátor, vagy fizikai Android eszköz (USB debugging bekapcsolva)
+
+### Lépések
+
+```bash
+# 1. Csomagok letöltése
+flutter pub get
+
+# 2. Emulátor indítása (Android Studio-ból, vagy parancssorból)
+# 3. Futtatás
+flutter run
+```
+
+> Ha `flutter doctor` valami hiányzó Android SDK eszközt jelez:  
+> Android Studio → SDK Manager → SDK Tools → **Android SDK Command-line Tools** telepítése megoldja.
+
+Az app első indításkor automatikusan betölti a beépített 50 KRESZ kérdést (köztük 11 képes táblakérdést) a `assets/data/kerdesek.json` fájlból — nem indul üresen.
+
+---
+
+## Ismert hibák / hiányosságok
+
+- A kártyaforgatás animáció néha akadhat nagyon lassú emulátoron; fizikai eszközön nem tapasztalható
+- Az adatbázis törlése esetén az app újrainduláskor visszaállítja az alap kérdéseket, de a korábbi haladás elvész (ez szándékos reset-ként is használható)
+- A beépített kérdések száma (50 db) a valódi KRESZ vizsgához képest kevés — éles verzióban az összes ~800 kérdést lehetne belevenni
+
+## Fejlesztési lehetőségek
+
+- Több kérdés hozzáadása (az összes magyarországi KRESZ kérdés)
+- Emlékeztető push notification: „Ma még nem gyakoroltál"
+- Tábla felismerős mód: csak a tábla képe látszik, szöveg nélkül kell felismerni
+- Felhasználói fiókok és felhőszinkronizáció
+
+---
+
+Neptun: I6UY10  
+Oktató: Dávid Márta  
+Határidő: 2026.11.18

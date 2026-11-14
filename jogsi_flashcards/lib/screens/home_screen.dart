@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../services/database_service.dart';
 import 'card_list_screen.dart';
 import 'practice_screen.dart';
@@ -29,10 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _betoltesInditas() async {
-    await Future.wait([
-      _temakBetoltese(),
-      _utolsoGakorlasBetoltese(),
-    ]);
+    await Future.wait([_temakBetoltese(), _utolsoGakorlasBetoltese()]);
   }
 
   Future<void> _temakBetoltese() async {
@@ -120,10 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => PracticeScreen(
-          tema: tema,
-          csakKepes: csakKepes,
-        ),
+        builder: (_) => PracticeScreen(tema: tema, csakKepes: csakKepes),
       ),
     );
     _temakBetoltese();
@@ -136,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('✅ $count kérdés és KRESZ tábla szinkronizálva!'),
+          content: Text('$count kérdés és KRESZ tábla szinkronizálva!'),
           backgroundColor: Colors.green,
           duration: const Duration(seconds: 2),
         ),
@@ -151,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '🚗 Jogsi Flashcards',
+          'Jogsi Flashcards',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -198,17 +193,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.only(bottom: 12),
                       child: Row(
                         children: [
-                          Icon(Icons.history,
-                              size: 16,
-                              color: colorScheme.onSurface
-                                  .withValues(alpha: 0.5)),
+                          Icon(
+                            Icons.history,
+                            size: 16,
+                            color: colorScheme.onSurface.withValues(alpha: 0.5),
+                          ),
                           const SizedBox(width: 6),
                           Text(
                             'Utolsó gyakorlás: $_utolsoPakorlas',
                             style: TextStyle(
                               fontSize: 13,
-                              color: colorScheme.onSurface
-                                  .withValues(alpha: 0.5),
+                              color: colorScheme.onSurface.withValues(
+                                alpha: 0.5,
+                              ),
                             ),
                           ),
                         ],
@@ -219,15 +216,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   Card(
                     elevation: 3,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(16),
                       onTap: () async {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => const CardListScreen(
-                                kezdetbenCsakKepes: true),
+                            builder: (_) =>
+                                const CardListScreen(kezdetbenCsakKepes: true),
                           ),
                         );
                         _temakBetoltese();
@@ -251,8 +249,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.white.withValues(alpha: 0.2),
                                 shape: BoxShape.circle,
                               ),
-                              child: const Icon(Icons.image,
-                                  color: Colors.white, size: 28),
+                              child: const Icon(
+                                Icons.image,
+                                color: Colors.white,
+                                size: 28,
+                              ),
                             ),
                             const SizedBox(width: 14),
                             Expanded(
@@ -262,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Row(
                                     children: [
                                       const Text(
-                                        '🖼️ Képes Kérdések',
+                                        'Képes Kérdések',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 17,
@@ -272,12 +273,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       const SizedBox(width: 8),
                                       Container(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 2),
+                                          horizontal: 8,
+                                          vertical: 2,
+                                        ),
                                         decoration: BoxDecoration(
-                                          color: Colors.white
-                                              .withValues(alpha: 0.3),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
+                                          color: Colors.white.withValues(
+                                            alpha: 0.3,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
                                         ),
                                         child: Text(
                                           '$_kepesKartyakSzama db',
@@ -294,7 +299,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const Text(
                                     'KRESZ táblák (STOP, elsőbbség, körforgalom...)',
                                     style: TextStyle(
-                                        color: Colors.white70, fontSize: 13),
+                                      color: Colors.white70,
+                                      fontSize: 13,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -304,7 +311,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 backgroundColor: Colors.white,
                                 foregroundColor: const Color(0xFFE65100),
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 8),
+                                  horizontal: 10,
+                                  vertical: 8,
+                                ),
                               ),
                               onPressed: () =>
                                   _gyakorlasInditas(null, csakKepes: true),
@@ -323,11 +332,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundColor: colorScheme.primaryContainer,
-                        child:
-                            Icon(Icons.menu_book, color: colorScheme.primary),
+                        child: Icon(
+                          Icons.menu_book,
+                          color: colorScheme.primary,
+                        ),
                       ),
                       title: const Text(
-                        '📚 Kérdésbank (Összes kérdés listája)',
+                        'Kérdésbank (Összes kérdés listája)',
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       subtitle: const Text(
@@ -338,7 +349,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const CardListScreen()),
+                            builder: (_) => const CardListScreen(),
+                          ),
                         );
                         _temakBetoltese();
                       },
@@ -364,7 +376,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     final arany = stat != null
                         ? (stat['sikerarany'] as double)
                         : 0.0;
-                    final vanKep = tema == 'Elsőbbségadás' ||
+                    final vanKep =
+                        tema == 'Elsőbbségadás' ||
                         tema == 'Közlekedési táblák' ||
                         tema == 'Sebességkorlátozás';
 
@@ -397,12 +410,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: colorScheme.errorContainer,
                     child: ListTile(
                       leading: CircleAvatar(
-                        backgroundColor:
-                            colorScheme.error.withValues(alpha: 0.2),
+                        backgroundColor: colorScheme.error.withValues(
+                          alpha: 0.2,
+                        ),
                         child: Icon(Icons.quiz, color: colorScheme.error),
                       ),
                       title: Text(
-                        '🧪 Tesztmód',
+                        'Tesztmód',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: colorScheme.onErrorContainer,
@@ -411,17 +425,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       subtitle: Text(
                         '20 véletlen kérdés · vizsgaszimuláció',
                         style: TextStyle(
-                          color: colorScheme.onErrorContainer
-                              .withValues(alpha: 0.7),
+                          color: colorScheme.onErrorContainer.withValues(
+                            alpha: 0.7,
+                          ),
                         ),
                       ),
-                      trailing: Icon(Icons.chevron_right,
-                          color: colorScheme.onErrorContainer),
+                      trailing: Icon(
+                        Icons.chevron_right,
+                        color: colorScheme.onErrorContainer,
+                      ),
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (_) => const TestScreen()),
+                          MaterialPageRoute(builder: (_) => const TestScreen()),
                         );
                       },
                     ),
@@ -482,13 +498,15 @@ class _TemakorKartya extends StatelessWidget {
                           const SizedBox(width: 8),
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 2),
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.green.withValues(alpha: 0.15),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Text(
-                              '🖼️ Képes',
+                              'Képes',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,

@@ -76,10 +76,6 @@ class _TestScreenState extends State<TestScreen> {
       context: context,
       barrierDismissible: false,
       builder: (_) => AlertDialog(
-        icon: Text(
-          megfelelt ? '🎉' : '😞',
-          style: const TextStyle(fontSize: 48),
-        ),
         title: Text(megfelelt ? 'Megfelelt!' : 'Nem felelt meg'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -97,7 +93,7 @@ class _TestScreenState extends State<TestScreen> {
             const SizedBox(height: 12),
             Text(
               megfelelt
-                  ? 'Gratulálok! A valódi vizsgán is sikerülne! 🚗'
+                  ? 'Gratulálok! A valódi vizsgán is sikerülne!'
                   : 'A vizsgán 86% kell az átmenéshez. Még egy kis gyakorlás kell!',
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 13),
@@ -134,7 +130,7 @@ class _TestScreenState extends State<TestScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('🧪 Tesztmód'),
+        title: const Text('Tesztmód'),
         centerTitle: true,
         backgroundColor: colorScheme.errorContainer,
         foregroundColor: colorScheme.onErrorContainer,

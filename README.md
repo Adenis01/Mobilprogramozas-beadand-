@@ -13,10 +13,12 @@ Egy KRESZ-tanulást segítő flashcard (villogtatós kártyás) alkalmazás, ame
 | Funkció | Leírás |
 |---|---|
 | **Témakörök** | 4 témakör: Elsőbbségadás, Közlekedési táblák, Sebességkorlátozás, Büntetőpontok |
-| **Kártyaforgatás** | 3D flip animáció — előlapon kérdés, hátlapon válasz |
+| **Képes kérdések** | 11 db KRESZ-táblás és közlekedési ábrás kérdés külön gyakorlási és szűrési móddal |
+| **Kérdésbank** | Összes kérdés böngészése, keresés és témakör/képes szűrés |
+| **Kártyaforgatás** | 3D flip animáció — előlapon kérdés (és opcionális kép), hátlapon válasz |
 | **Okos ismétlés** | Saját implementációjú spaced repetition: tudtam → ritkábban jön, nem tudtam → hamarabb visszajön |
 | **Statisztika** | Témakörönkénti haladás százalékban, progress bar-ral |
-| **Tesztmód** | 20 véletlenszerű kérdés, vizsgaszimulációként — a végén pontszám és értékelés |
+| **Tesztmód** | 20 véletlenszerű kérdés, vizsgaszimulációként — a végén pontszám és 86%-os vizsgaértékelés |
 | **Utolsó gyakorlás** | A főmenün látszik, mikor gyakoroltál utoljára |
 
 ---
@@ -30,9 +32,10 @@ Egy KRESZ-tanulást segítő flashcard (villogtatós kártyás) alkalmazás, ame
 
 ```
 lib/
+├── main.dart      # alkalmazás belépési pont, Material 3 világos/sötét téma
 ├── models/        # adatmodellek (Flashcard)
 ├── services/      # adatbázis logika (DatabaseService)
-├── screens/       # képernyők (főmenü, gyakorlás, statisztika, tesztmód)
+├── screens/       # képernyők (főmenü, gyakorlás, kérdésbank, statisztika, tesztmód)
 └── widgets/       # újrafelhasználható elemek (FlipCard animáció)
 ```
 
@@ -60,7 +63,7 @@ flutter run
 > Ha `flutter doctor` valami hiányzó Android SDK eszközt jelez:  
 > Android Studio → SDK Manager → SDK Tools → **Android SDK Command-line Tools** telepítése megoldja.
 
-Az app első indításkor automatikusan betölti a beépített ~50 KRESZ kérdést a `assets/data/kerdesek.json` fájlból — nem indul üresen.
+Az app első indításkor automatikusan betölti a beépített 50 KRESZ kérdést (köztük 11 képes táblakérdést) a `assets/data/kerdesek.json` fájlból — nem indul üresen.
 
 ---
 
@@ -68,7 +71,7 @@ Az app első indításkor automatikusan betölti a beépített ~50 KRESZ kérdé
 
 - A kártyaforgatás animáció néha akadhat nagyon lassú emulátoron; fizikai eszközön nem tapasztalható
 - Az adatbázis törlése esetén az app újrainduláskor visszaállítja az alap kérdéseket, de a korábbi haladás elvész (ez szándékos reset-ként is használható)
-- A beépített kérdések száma (~50 db) a valódi KRESZ vizsgához képest kevés — éles verzióban az összes ~800 kérdést lehetne belevenni
+- A beépített kérdések száma (50 db) a valódi KRESZ vizsgához képest kevés — éles verzióban az összes ~800 kérdést lehetne belevenni
 
 ## Fejlesztési lehetőségek
 

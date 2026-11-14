@@ -42,7 +42,7 @@ class _StatsScreenState extends State<StatsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('📊 Statisztika'),
+        title: const Text('Statisztika'),
         centerTitle: true,
       ),
       body: _betoltes

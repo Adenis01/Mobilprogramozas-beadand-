@@ -103,7 +103,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
       context: context,
       barrierDismissible: false,
       builder: (_) => AlertDialog(
-        title: const Text('🎉 Kör vége!'),
+        title: const Text('Kör vége!'),
         content: Text(
           'Befejezted a kört!\n\n'
           'Összesen: $osszes kártya\n'
@@ -135,7 +135,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.csakKepes
-            ? '🖼️ Képes kérdések'
+            ? 'Képes kérdések'
             : (widget.tema ?? 'Összes témakör')),
         centerTitle: true,
       ),
