@@ -93,7 +93,9 @@ class _TestScreenState extends State<TestScreen> {
             Text('$helyes helyes / $osszes kérdés'),
             const SizedBox(height: 12),
             Text(
-              megfelelt ? 'Gratulálok! A valódi vizsgán is sikerülne!' : 'A vizsgán 86% kell az átmenéshez. Még egy kis gyakorlás kell!',
+              megfelelt
+                  ? 'Gratulálok!'
+                  : 'Nem feleltél meg. Még egy kis gyakorlás kell!',
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 13),
             ),
