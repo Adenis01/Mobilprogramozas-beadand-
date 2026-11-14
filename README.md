@@ -1,4 +1,4 @@
-# Jogsi Flashcards
+# KRESZ tanulás kártyákkal
 
 Mobilalkalmazás beadandó – Udvardy Balázs
 

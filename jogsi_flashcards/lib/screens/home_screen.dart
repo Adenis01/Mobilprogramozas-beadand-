@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Jogsi Flashcards',
+          'KRESZ tanulás kártyákkal',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

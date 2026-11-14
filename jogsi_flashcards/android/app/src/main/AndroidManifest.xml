@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="jogsi_flashcards"
+        android:label="KRESZ tanulás kártyákkal"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
