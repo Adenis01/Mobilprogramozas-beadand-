@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
 import '../services/database_service.dart';
 
 /// Statisztika képernyő — témakörönkénti haladás
@@ -41,78 +42,74 @@ class _StatsScreenState extends State<StatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Statisztika'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Statisztika'), centerTitle: true),
       body: _betoltes
           ? const Center(child: CircularProgressIndicator())
           : _statisztikak.isEmpty
-              ? const Center(child: Text('Még nincs statisztika.'))
-              : ListView(
-                  padding: const EdgeInsets.all(16),
-                  children: [
-                    const Text(
-                      'Témakörönkénti haladás',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ..._statisztikak.map((stat) {
-                      final arany = (stat['sikerarany'] as double);
-                      final szin = _szinArany(arany);
-                      return Card(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+          ? const Center(child: Text('Még nincs statisztika.'))
+          : ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                const Text(
+                  'Témakörönkénti haladás',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 16),
+                ..._statisztikak.map((stat) {
+                  final arany = (stat['sikerarany'] as double);
+                  final szin = _szinArany(arany);
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            stat['tema'] as String,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
                             children: [
-                              Text(
-                                stat['tema'] as String,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: LinearProgressIndicator(
+                                    value: arany,
+                                    backgroundColor: szin.withValues(
+                                      alpha: 0.2,
+                                    ),
+                                    valueColor: AlwaysStoppedAnimation(szin),
+                                    minHeight: 12,
+                                  ),
                                 ),
                               ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: LinearProgressIndicator(
-                                        value: arany,
-                                        backgroundColor: szin.withValues(alpha: 0.2),
-                                        valueColor: AlwaysStoppedAnimation(szin),
-                                        minHeight: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Text(
-                                    '${(arany * 100).round()}%',
-                                    style: TextStyle(
-                                      color: szin,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 4),
+                              const SizedBox(width: 12),
                               Text(
-                                '${stat['tudott']} / ${stat['osszes']} kártya ismert',
-                                style: Theme.of(context).textTheme.bodySmall,
+                                '${(arany * 100).round()}%',
+                                style: TextStyle(
+                                  color: szin,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      );
-                    }),
-                  ],
-                ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '${stat['tudott']} / ${stat['osszes']} kártya ismert',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ],
+            ),
     );
   }
 }

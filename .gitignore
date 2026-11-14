@@ -1,0 +1,7 @@
+# Android Studio / IntelliJ IDEA fájlok (.xml, .iml, cache)
+.idea/
+*.iml
+
+# Android / Gradle build kimenetek
+jogsi_flashcards/android/build/
+.gradle/

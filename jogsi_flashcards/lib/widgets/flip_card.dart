@@ -1,5 +1,7 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
+
+import 'package:material_ui/material_ui.dart';
+
 import '../models/flashcard.dart';
 
 /// 3D megforgatható kártya widget — képtámogatással
@@ -31,9 +33,10 @@ class _FlipCardState extends State<FlipCard>
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _animation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -87,7 +90,8 @@ class _FlipCardState extends State<FlipCard>
                 : _CardFace(
                     szoveg: widget.card.kerdes,
                     tema: widget.card.tema,
-                    kepUrl: widget.card.kepUrl, // kérdés oldalon mutatjuk a képet
+                    kepUrl:
+                        widget.card.kepUrl, // kérdés oldalon mutatjuk a képet
                     isElolap: true,
                   ),
           );
@@ -174,7 +178,8 @@ class _CardFace extends StatelessWidget {
                       ? Image.asset(
                           kepUrl!,
                           fit: BoxFit.contain,
-                          errorBuilder: (context, error, stack) => _buildImageError(colorScheme),
+                          errorBuilder: (context, error, stack) =>
+                              _buildImageError(colorScheme),
                         )
                       : Image.network(
                           kepUrl!,
@@ -183,14 +188,16 @@ class _CardFace extends StatelessWidget {
                             if (loadingProgress == null) return child;
                             return Center(
                               child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null
+                                value:
+                                    loadingProgress.expectedTotalBytes != null
                                     ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
+                                          loadingProgress.expectedTotalBytes!
                                     : null,
                               ),
                             );
                           },
-                          errorBuilder: (context, error, stack) => _buildImageError(colorScheme),
+                          errorBuilder: (context, error, stack) =>
+                              _buildImageError(colorScheme),
                         ),
                 ),
               ),
@@ -238,9 +245,11 @@ class _CardFace extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.broken_image_outlined,
-            size: 48,
-            color: colorScheme.onSurface.withValues(alpha: 0.3)),
+        Icon(
+          Icons.broken_image_outlined,
+          size: 48,
+          color: colorScheme.onSurface.withValues(alpha: 0.3),
+        ),
         const SizedBox(height: 8),
         Text(
           'Kép nem tölthető be',

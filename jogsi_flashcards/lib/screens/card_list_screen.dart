@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
 import '../models/flashcard.dart';
 import '../services/database_service.dart';
 import '../widgets/flip_card.dart';
@@ -78,11 +79,11 @@ class _CardListScreenState extends State<CardListScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final kepesDarab =
-        _osszesKartya.where((k) => k.kepUrl != null && k.kepUrl!.isNotEmpty).length;
+    final kepesDarab = _osszesKartya
+        .where((k) => k.kepUrl != null && k.kepUrl!.isNotEmpty)
+        .length;
 
-    final temak =
-        _osszesKartya.map((k) => k.tema).toSet().toList()..sort();
+    final temak = _osszesKartya.map((k) => k.tema).toSet().toList()..sort();
 
     return Scaffold(
       appBar: AppBar(
@@ -114,7 +115,10 @@ class _CardListScreenState extends State<CardListScreen> {
                 // Gyakorlás indítása banner
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
@@ -143,7 +147,9 @@ class _CardListScreenState extends State<CardListScreen> {
                               'Gyakorold külön a táblákat és ábrákat!',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: colorScheme.onSurface.withValues(alpha: 0.7),
+                                color: colorScheme.onSurface.withValues(
+                                  alpha: 0.7,
+                                ),
                               ),
                             ),
                           ],
@@ -154,7 +160,9 @@ class _CardListScreenState extends State<CardListScreen> {
                           backgroundColor: colorScheme.primary,
                           foregroundColor: colorScheme.onPrimary,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
                         ),
                         icon: const Icon(Icons.play_arrow, size: 18),
                         label: const Text('Gyakorlás'),
@@ -176,7 +184,10 @@ class _CardListScreenState extends State<CardListScreen> {
 
                 // Kereső mező
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'Keresés a kérdések és válaszok között...',
@@ -193,13 +204,17 @@ class _CardListScreenState extends State<CardListScreen> {
                             )
                           : null,
                       filled: true,
-                      fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
+                      fillColor: colorScheme.surfaceContainerHighest.withValues(
+                        alpha: 0.4,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                     ),
                     onChanged: (val) {
                       _kereses = val;
@@ -211,8 +226,10 @@ class _CardListScreenState extends State<CardListScreen> {
                 // Szűrő sáv
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   child: Row(
                     children: [
                       // Csak képes kérdések kapcsoló chip
@@ -262,8 +279,10 @@ class _CardListScreenState extends State<CardListScreen> {
 
                 // Találati számláló
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 4,
+                  ),
                   child: Row(
                     children: [
                       Text(
@@ -285,23 +304,29 @@ class _CardListScreenState extends State<CardListScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.search_off,
-                                  size: 48,
-                                  color: colorScheme.onSurface
-                                      .withValues(alpha: 0.3)),
+                              Icon(
+                                Icons.search_off,
+                                size: 48,
+                                color: colorScheme.onSurface.withValues(
+                                  alpha: 0.3,
+                                ),
+                              ),
                               const SizedBox(height: 12),
-                              const Text('Nincs a feltételeknek megfelelő kérdés'),
+                              const Text(
+                                'Nincs a feltételeknek megfelelő kérdés',
+                              ),
                             ],
                           ),
                         )
                       : ListView.separated(
                           padding: const EdgeInsets.all(16),
                           itemCount: _szurtKartyak.length,
-                          separatorBuilder: (ctx, i) => const SizedBox(height: 12),
+                          separatorBuilder: (ctx, i) =>
+                              const SizedBox(height: 12),
                           itemBuilder: (context, index) {
                             final card = _szurtKartyak[index];
-                            final vanKep = card.kepUrl != null &&
-                                card.kepUrl!.isNotEmpty;
+                            final vanKep =
+                                card.kepUrl != null && card.kepUrl!.isNotEmpty;
 
                             return Card(
                               elevation: 2,
@@ -309,8 +334,9 @@ class _CardListScreenState extends State<CardListScreen> {
                                 borderRadius: BorderRadius.circular(16),
                                 side: vanKep
                                     ? BorderSide(
-                                        color: colorScheme.primary
-                                            .withValues(alpha: 0.3),
+                                        color: colorScheme.primary.withValues(
+                                          alpha: 0.3,
+                                        ),
                                         width: 1.5,
                                       )
                                     : BorderSide.none,
@@ -329,50 +355,56 @@ class _CardListScreenState extends State<CardListScreen> {
                                         Container(
                                           width: 64,
                                           height: 64,
-                                          margin:
-                                              const EdgeInsets.only(right: 14),
+                                          margin: const EdgeInsets.only(
+                                            right: 14,
+                                          ),
                                           decoration: BoxDecoration(
                                             color: colorScheme
                                                 .surfaceContainerHighest
                                                 .withValues(alpha: 0.5),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
                                             border: Border.all(
                                               color: colorScheme.outlineVariant,
                                             ),
                                           ),
                                           clipBehavior: Clip.antiAlias,
-                                          child: card.kepUrl!
-                                                  .startsWith('assets/')
+                                          child:
+                                              card.kepUrl!.startsWith('assets/')
                                               ? Image.asset(
                                                   card.kepUrl!,
                                                   fit: BoxFit.contain,
                                                   errorBuilder: (c, err, st) =>
-                                                      const Icon(Icons
-                                                          .broken_image,
-                                                          size: 28),
+                                                      const Icon(
+                                                        Icons.broken_image,
+                                                        size: 28,
+                                                      ),
                                                 )
                                               : Image.network(
                                                   card.kepUrl!,
                                                   fit: BoxFit.contain,
                                                   errorBuilder: (c, err, st) =>
-                                                      const Icon(Icons
-                                                          .broken_image,
-                                                          size: 28),
+                                                      const Icon(
+                                                        Icons.broken_image,
+                                                        size: 28,
+                                                      ),
                                                 ),
                                         )
                                       else
                                         Container(
                                           width: 48,
                                           height: 48,
-                                          margin:
-                                              const EdgeInsets.only(right: 14),
+                                          margin: const EdgeInsets.only(
+                                            right: 14,
+                                          ),
                                           decoration: BoxDecoration(
                                             color: colorScheme
                                                 .secondaryContainer
                                                 .withValues(alpha: 0.4),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
                                           ),
                                           child: Icon(
                                             Icons.help_outline,
@@ -389,16 +421,18 @@ class _CardListScreenState extends State<CardListScreen> {
                                             Row(
                                               children: [
                                                 Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 8,
-                                                      vertical: 2),
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 8,
+                                                        vertical: 2,
+                                                      ),
                                                   decoration: BoxDecoration(
                                                     color: colorScheme.primary
                                                         .withValues(alpha: 0.1),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10),
+                                                          10,
+                                                        ),
                                                   ),
                                                   child: Text(
                                                     card.tema,
@@ -406,24 +440,28 @@ class _CardListScreenState extends State<CardListScreen> {
                                                       fontSize: 11,
                                                       fontWeight:
                                                           FontWeight.w600,
-                                                      color: colorScheme
-                                                          .primary,
+                                                      color:
+                                                          colorScheme.primary,
                                                     ),
                                                   ),
                                                 ),
                                                 if (vanKep) ...[
                                                   const SizedBox(width: 6),
                                                   Container(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 6,
-                                                        vertical: 2),
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 6,
+                                                          vertical: 2,
+                                                        ),
                                                     decoration: BoxDecoration(
                                                       color: Colors.green
-                                                          .withValues(alpha: 0.15),
+                                                          .withValues(
+                                                            alpha: 0.15,
+                                                          ),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              10),
+                                                            10,
+                                                          ),
                                                     ),
                                                     child: const Text(
                                                       'Képes',

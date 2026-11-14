@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
 import '../models/flashcard.dart';
 import '../services/database_service.dart';
 import '../widgets/flip_card.dart';
@@ -8,11 +9,7 @@ class PracticeScreen extends StatefulWidget {
   final String? tema; // null = összes témakör
   final bool csakKepes; // ha true, csak a képes kérdéseket gyakoroljuk
 
-  const PracticeScreen({
-    super.key,
-    required this.tema,
-    this.csakKepes = false,
-  });
+  const PracticeScreen({super.key, required this.tema, this.csakKepes = false});
 
   @override
   State<PracticeScreen> createState() => _PracticeScreenState();
@@ -61,8 +58,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
 
   Flashcard? get _aktualisKartya =>
       _kartyak.isNotEmpty && _aktualisIndex < _kartyak.length
-          ? _kartyak[_aktualisIndex]
-          : null;
+      ? _kartyak[_aktualisIndex]
+      : null;
 
   void _megforditas() {
     setState(() => _megfordult = !_megfordult);
@@ -134,99 +131,108 @@ class _PracticeScreenState extends State<PracticeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.csakKepes
-            ? 'Képes kérdések'
-            : (widget.tema ?? 'Összes témakör')),
+        title: Text(
+          widget.csakKepes
+              ? 'Képes kérdések'
+              : (widget.tema ?? 'Összes témakör'),
+        ),
         centerTitle: true,
       ),
       body: _betoltes
           ? const Center(child: CircularProgressIndicator())
           : _kartyak.isEmpty
-              ? const Center(child: Text('Nincsenek kártyák ebben a témakörben.'))
-              : Column(
-                  children: [
-                    // Haladás jelző
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: [
-                          Text(
-                            '${_aktualisIndex + 1} / ${_kartyak.length}',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: LinearProgressIndicator(
-                              value: (_aktualisIndex + 1) / _kartyak.length,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
-                        ],
+          ? const Center(child: Text('Nincsenek kártyák ebben a témakörben.'))
+          : Column(
+              children: [
+                // Haladás jelző
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Text(
+                        '${_aktualisIndex + 1} / ${_kartyak.length}',
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                    ),
-
-                    // A kártya maga (forgatható)
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: _aktualisKartya != null
-                            ? FlipCard(
-                                card: _aktualisKartya!,
-                                isMegfordult: _megfordult,
-                                onTap: _megforditas,
-                              )
-                            : const SizedBox.shrink(),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: LinearProgressIndicator(
+                          value: (_aktualisIndex + 1) / _kartyak.length,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
                       ),
-                    ),
+                    ],
+                  ),
+                ),
 
-                    // Gombok
-                    Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: _megfordult
-                          ? Row(
-                              children: [
-                                Expanded(
-                                  child: OutlinedButton.icon(
-                                    icon: const Icon(Icons.close, color: Colors.red),
-                                    label: const Text(
-                                      'Nem tudtam',
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                    style: OutlinedButton.styleFrom(
-                                      side: const BorderSide(color: Colors.red),
-                                      padding: const EdgeInsets.symmetric(vertical: 16),
-                                    ),
-                                    onPressed: _nemTudtam,
+                // A kártya maga (forgatható)
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: _aktualisKartya != null
+                        ? FlipCard(
+                            card: _aktualisKartya!,
+                            isMegfordult: _megfordult,
+                            onTap: _megforditas,
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                ),
+
+                // Gombok
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: _megfordult
+                      ? Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButton.icon(
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                                label: const Text(
+                                  'Nem tudtam',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                  side: const BorderSide(color: Colors.red),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
                                   ),
                                 ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: FilledButton.icon(
-                                    icon: const Icon(Icons.check),
-                                    label: const Text('Tudtam'),
-                                    style: FilledButton.styleFrom(
-                                      backgroundColor: Colors.green,
-                                      padding: const EdgeInsets.symmetric(vertical: 16),
-                                    ),
-                                    onPressed: _tudtam,
-                                  ),
-                                ),
-                              ],
-                            )
-                          : SizedBox(
-                              width: double.infinity,
-                              child: FilledButton.icon(
-                                icon: const Icon(Icons.flip),
-                                label: const Text('Megfordítás'),
-                                style: FilledButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
-                                ),
-                                onPressed: _megforditas,
+                                onPressed: _nemTudtam,
                               ),
                             ),
-                    ),
-                  ],
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: FilledButton.icon(
+                                icon: const Icon(Icons.check),
+                                label: const Text('Tudtam'),
+                                style: FilledButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                ),
+                                onPressed: _tudtam,
+                              ),
+                            ),
+                          ],
+                        )
+                      : SizedBox(
+                          width: double.infinity,
+                          child: FilledButton.icon(
+                            icon: const Icon(Icons.flip),
+                            label: const Text('Megfordítás'),
+                            style: FilledButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                            ),
+                            onPressed: _megforditas,
+                          ),
+                        ),
                 ),
+              ],
+            ),
     );
   }
 }
