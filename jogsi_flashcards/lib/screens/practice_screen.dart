@@ -37,18 +37,11 @@ class _PracticeScreenState extends State<PracticeScreen> {
       kartyak = await _dbService.getKepesKartyak();
       kartyak.shuffle();
     } else if (widget.tema != null) {
-      kartyak = await _dbService.getEsedekes(tema: widget.tema);
-      // Ha minden esedékes kártya el lett végezve, mutassuk az összeset
-      if (kartyak.isEmpty) {
-        kartyak = await _dbService.getKartyakTema(widget.tema!);
-        kartyak.shuffle();
-      }
+      kartyak = await _dbService.getKartyakTema(widget.tema!);
+      kartyak.shuffle();
     } else {
-      kartyak = await _dbService.getEsedekes();
-      if (kartyak.isEmpty) {
-        kartyak = await _dbService.getOsszes();
-        kartyak.shuffle();
-      }
+      kartyak = await _dbService.getOsszes();
+      kartyak.shuffle();
     }
 
     setState(() {
