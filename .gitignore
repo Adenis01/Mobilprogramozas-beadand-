@@ -5,3 +5,9 @@
 # Android / Gradle build kimenetek
 jogsi_flashcards/android/build/
 .gradle/
+
+# macOS rendszerfájlok és beadandó csomagok / másolatok
+.DS_Store
+*.zip
+Archívum/
+Udvardy_Balázs_Beadandó/
