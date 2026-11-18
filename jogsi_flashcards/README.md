@@ -6,7 +6,7 @@ Mobilalkalmazás beadandó – Udvardy Balázs
 
 ## Az alkalmazás célja és funkciói
 
-Egy KRESZ-tanulást segítő flashcard (villogtatós kártyás) alkalmazás, amely **spaced repetition** (okos ismétléses) rendszerrel működik. A legtöbb KRESZ-es app csak teszteket kínál vagy véletlenszerűen kavarja a kérdéseket — ez az app azt is figyeli, mit tudsz és mit nem: amit nem tudsz, hamarabb visszadobja, amit jól tudsz, egyre ritkábban mutatja.
+Egy KRESZ-tanulást segítő flashcard (kártyás) alkalmazás, amellyel témakörökre bontva, interaktív kártyaforgatással és vizsgaszimulációs tesztmóddal lehet gyakorolni az elméleti vizsgára. Az alkalmazás rögzíti a „Tudtam" / „Nem tudtam" válaszokat, így témakörönként nyomon követhető a tanulási haladás.
 
 ### Főbb funkciók
 
@@ -16,8 +16,7 @@ Egy KRESZ-tanulást segítő flashcard (villogtatós kártyás) alkalmazás, ame
 | **Képes kérdések** | 11 db KRESZ-táblás és közlekedési ábrás kérdés külön gyakorlási és szűrési móddal |
 | **Kérdésbank** | Összes kérdés böngészése, keresés és témakör/képes szűrés |
 | **Kártyaforgatás** | 3D flip animáció — előlapon kérdés (és opcionális kép), hátlapon válasz |
-| **Okos ismétlés** | Saját implementációjú spaced repetition: tudtam → ritkábban jön, nem tudtam → hamarabb visszajön |
-| **Statisztika** | Témakörönkénti haladás százalékban, progress bar-ral |
+| **Statisztika** | Témakörönkénti haladás százalékban, progress bar-ral a helyes válaszok aránya alapján |
 | **Tesztmód** | 20 véletlenszerű kérdés, vizsgaszimulációként — a végén pontszám és 86%-os vizsgaértékelés |
 | **Utolsó gyakorlás** | A főmenün látszik, mikor gyakoroltál utoljára |
 

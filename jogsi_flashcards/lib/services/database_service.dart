@@ -130,7 +130,6 @@ class DatabaseService {
       'flashcards',
       where: 'tema = ?',
       whereArgs: [tema],
-      orderBy: 'kovetkezo_megmutatas ASC',
     );
     return rows.map(Flashcard.fromDb).toList();
   }
@@ -139,30 +138,6 @@ class DatabaseService {
   Future<List<Flashcard>> getOsszes() async {
     final database = await db;
     final rows = await database.query('flashcards');
-    return rows.map(Flashcard.fromDb).toList();
-  }
-
-  /// Esedékes kártyák lekérése (spaced repetition)
-  Future<List<Flashcard>> getEsedekes({String? tema}) async {
-    final database = await db;
-    final now = DateTime.now().toIso8601String();
-
-    List<Map<String, dynamic>> rows;
-    if (tema != null) {
-      rows = await database.query(
-        'flashcards',
-        where: 'tema = ? AND (kovetkezo_megmutatas IS NULL OR kovetkezo_megmutatas <= ?)',
-        whereArgs: [tema, now],
-        orderBy: 'kovetkezo_megmutatas ASC',
-      );
-    } else {
-      rows = await database.query(
-        'flashcards',
-        where: 'kovetkezo_megmutatas IS NULL OR kovetkezo_megmutatas <= ?',
-        whereArgs: [now],
-        orderBy: 'kovetkezo_megmutatas ASC',
-      );
-    }
     return rows.map(Flashcard.fromDb).toList();
   }
 

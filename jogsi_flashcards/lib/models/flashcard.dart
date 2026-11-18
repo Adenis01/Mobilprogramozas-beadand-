@@ -6,11 +6,8 @@ class Flashcard {
   final String valasz;
   final String? kepUrl; // opcionális kép URL (pl. KRESZ tábla képe)
 
-  // Spaced repetition mezők (a "okos ismétlés" logikájához)
-  int tudtamSzam;     // hányszor nyomtuk a "Tudom" gombot
-  int nemTudtamSzam;  // hányszor nyomtuk a "Nem tudom" gombot
-  double interval;    // napokban, mikor kell következő alkalommal megmutatni
-  DateTime? kovetkezoMegmutatas;
+  int tudtamSzam;     // hányszor nyomtuk a "Tudtam" gombot
+  int nemTudtamSzam;  // hányszor nyomtuk a "Nem tudtam" gombot
 
   Flashcard({
     required this.id,
@@ -20,34 +17,16 @@ class Flashcard {
     this.kepUrl,
     this.tudtamSzam = 0,
     this.nemTudtamSzam = 0,
-    this.interval = 1.0,
-    this.kovetkezoMegmutatas,
   });
 
-  /// Helyes választ adott — növeljük az intervalt (ritkábban kell majd)
+  /// Helyes választ adott
   void tudtam() {
     tudtamSzam++;
-    // Egyszerű spaced repetition: minden helyes válasznál duplázódik az interval
-    if (interval < 1) {
-      interval = 1;
-    } else {
-      interval = interval * 2.0;
-    }
-    if (interval > 30) interval = 30; // max 30 nap
-    kovetkezoMegmutatas = DateTime.now().add(Duration(hours: (interval * 24).round()));
   }
 
-  /// Helytelen válasz — visszaállítjuk az intervalt (hamarabb kell majd)
+  /// Helytelen választ adott
   void nemTudtam() {
     nemTudtamSzam++;
-    interval = 0.5; // fél nap múlva jelenjen meg újra
-    kovetkezoMegmutatas = DateTime.now().add(const Duration(hours: 12));
-  }
-
-  /// Esedékes-e a kártya megmutatásra?
-  bool get esedekesE {
-    if (kovetkezoMegmutatas == null) return true;
-    return DateTime.now().isAfter(kovetkezoMegmutatas!);
   }
 
   /// Hány %-os a sikerességi arány ennél a kártyánál?
@@ -78,10 +57,6 @@ class Flashcard {
       kepUrl: row['kep_url'] as String?,
       tudtamSzam: row['tudtam_szam'] as int? ?? 0,
       nemTudtamSzam: row['nem_tudtam_szam'] as int? ?? 0,
-      interval: (row['interval_nap'] as num?)?.toDouble() ?? 1.0,
-      kovetkezoMegmutatas: row['kovetkezo_megmutatas'] != null
-          ? DateTime.parse(row['kovetkezo_megmutatas'] as String)
-          : null,
     );
   }
 
@@ -95,8 +70,6 @@ class Flashcard {
       'kep_url': kepUrl,
       'tudtam_szam': tudtamSzam,
       'nem_tudtam_szam': nemTudtamSzam,
-      'interval_nap': interval,
-      'kovetkezo_megmutatas': kovetkezoMegmutatas?.toIso8601String(),
     };
   }
 }
